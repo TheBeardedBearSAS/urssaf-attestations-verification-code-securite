@@ -22,6 +22,7 @@ OAuth2 client credentials, scope `attn.codes_securite`, base URL `https://api.ur
 
 - [docs/api-reference.md](docs/api-reference.md) — technical reference (single source of truth for the package).
 - [docs/roadmap.md](docs/roadmap.md) — planned architecture and order of work.
+- [docs/adr/](docs/adr/) — architecture decision records (0000: decisions inherited from the reference package).
 - [docs/openapi/](docs/openapi/) — official OpenAPI contract(s) from the URSSAF API portal.
 - [docs/reference/](docs/reference/) — official URSSAF documentation.
 - Catalogue page: https://portailapi.urssaf.fr/fr/catalogue-api/prd/avcs
