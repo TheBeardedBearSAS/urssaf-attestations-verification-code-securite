@@ -127,7 +127,8 @@ make test        # unit + functional tests
 make help        # every target
 ```
 
-`make ci PHP_VERSION=8.4` runs the gate on another PHP version.
+`make ci PHP_VERSION=8.4` runs the gate on another PHP version (PHPStan always runs on 8.2, see
+[ADR 0007](docs/adr/0007-static-analysis-on-minimum-php.md)).
 
 `make test-contract` runs the live sandbox tests: set `URSSAF_SANDBOX_CLIENT_ID` and `URSSAF_SANDBOX_CLIENT_SECRET` (required), optionally `URSSAF_SANDBOX_BASE_URI`, `URSSAF_SANDBOX_VALID_SECURITY_CODE`, `URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE` (default `xxx`); without them every contract test is skipped. In CI the manual `contract` job reads the credentials and the valid code from repository secrets, the other two from repository variables.
 

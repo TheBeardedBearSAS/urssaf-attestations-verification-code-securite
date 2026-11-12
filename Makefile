@@ -7,6 +7,9 @@
 
 PHP := docker compose run --rm php
 PHP_XDEBUG := docker compose run --rm -e XDEBUG_MODE=coverage php
+# Static analysis always runs on the minimum supported PHP (8.2), like the CI `quality` jobs: type-coverage requires
+# typed class constants as soon as PHPStan runs on PHP 8.3+, a syntax PHP 8.2 rejects (docs/adr/0007).
+PHP_ANALYSIS := PHP_VERSION=8.2 docker compose run --rm php
 # Default suites = unit + functional, limited to the directories that exist (PHPUnit fails on a missing one).
 SUITES := $(shell for s in Unit Functional; do [ -d tests/$$s ] && echo $$s; done | tr A-Z a-z | paste -sd, -)
 UNIT_FUNCTIONAL := --testsuite=$(SUITES)
@@ -54,8 +57,8 @@ infection: ## Mutation testing (100% MSI); runs its own initial test pass (never
 	$(PHP) vendor/bin/infection --min-msi=100 --min-covered-msi=100 --threads=max --show-mutations --no-progress \
 		--test-framework-options="$(UNIT_FUNCTIONAL)"
 
-phpstan: ## PHPStan level max
-	$(PHP) vendor/bin/phpstan analyse --memory-limit=-1 --no-progress
+phpstan: ## PHPStan level max (always on PHP 8.2, see docs/adr/0007)
+	$(PHP_ANALYSIS) vendor/bin/phpstan analyse --memory-limit=-1 --no-progress
 
 mago: ## Mago lint + analyze (never `mago fmt`)
 	$(PHP) vendor/bin/mago lint --minimum-fail-level=note

@@ -45,4 +45,4 @@ Any new decision, or any departure from the reference, gets its own record `docs
 - Decisions 10–12 and 14 are deliberately dropped. Their records (ADR 0001, 0004) say what would bring them back
   (published quotas, a verification log to persist).
 - New records for this package: 0001 stateless SDK, 0002 verification result model, 0003 batching, 0004 quotas and
-  retry, 0005 `domaine` parameter, 0006 error codes.
+  retry, 0005 `domaine` parameter, 0006 error codes, 0007 static analysis on the minimum PHP version.
