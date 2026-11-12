@@ -15,3 +15,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   reference (`docs/api-reference.md`) and implementation roadmap (`docs/roadmap.md`).
 - Architecture decision records (`docs/adr/`): reference architecture inherited from `urssaf-tiers-prestations`
   (0000), stateless SDK, verification result model, batching, quotas and retry, `domaine` parameter, error codes.
+- Domain model: `SecurityCode`, certificate natures (§3.1), per-code fault codes (`FUNC201`–`FUNC203`), verification
+  result sum type (`VerifiedCertificate` | `RejectedCode`) and one value object per nature-specific data key (AMP, AVG,
+  CSG, CFP, EPM, FRS, CAAE, ASAA).

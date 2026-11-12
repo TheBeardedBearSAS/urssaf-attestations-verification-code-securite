@@ -15,6 +15,9 @@ required, and the formats of the identifiers are only illustrated by examples. N
   `VerifiedCertificate` and `RejectedCode`. Both expose `securityCode(): SecurityCode` and `isValid(): bool`.
 - Each wire item must carry **exactly one** of `infosSecurisation` / `functionalFaultCodeSecurite`. Neither or both is
   an `UnexpectedUrssafResponse`: an HTTP 200 never means "valid" on its own, and the package does not guess.
+- `SecurityCode::fromString()` trims surrounding whitespace (the PDF example list contains `"2PTROKKQU3DTLBM "`)
+  and rejects a blank value; the trimmed value is what is sent. This departs from the reference, which keeps
+  identifiers verbatim: a security code is typed by hand from a printed certificate.
 - `codeSecurite` is required on each item (it identifies the result). Every other scalar field is optional
   (`?string`): only structure and JSON types are checked, never formats that the specification does not define.
 - `nature` and `faultCode` are kept raw, next to a nullable typed view: `natureCode(): ?string` +
@@ -23,8 +26,8 @@ required, and the formats of the identifiers are only illustrated by examples. N
   `UnexpectedUrssafResponse`. §4.3 names `Europe/Paris`: a calendar date has no time zone, so the zone only matters if
   a caller converts it to an instant; this is documented, not encoded.
 - ASAA `dateDebutDeclaration`/`dateFinDeclaration` (Swagger `date-time`) are parsed as RFC 3339 into `Instant`.
-- `infosSecurisationSpecifiques` maps to one value object per key (`Amp`, `Avg`, `Csg`, `Cfp`, `Epm`, `Frs`, `Caae`,
-  `AsaaDetails`, interface `CertificateDetails`) and `Establishment(?siret, ?address)`. AVG figures
+- `infosSecurisationSpecifiques` maps to one value object per key (`AmpDetails`, `AvgDetails`, `CsgDetails`, `CfpDetails`,
+  `EpmDetails`, `FrsDetails`, `CaaeDetails`, `AsaaDetails`, interface `CertificateDetails`) and `Establishment(?siret, ?address)`. AVG figures
   (`dernierePeriodeAnalysee`, `masseSalariale`, `effectif`) stay raw strings: their format is not specified. An unknown
   key is ignored and only its name is logged at warning level.
 - Personal data (`nir`, `denomination`, `nomArtisteAuteur`, `prenomArtisteAuteur`) is masked in `__debugInfo()` and

@@ -6,7 +6,7 @@ professionnelle, micro-entrepreneur turnover, …) from the security code printe
 
 Namespace: `TheBeardedBear\UrssafAttestationsVerificationCodeSecurite`.
 
-> 🚧 **Skeleton — not implemented yet.** This repository currently contains the tooling and the specification only.
+> 🚧 **Work in progress.** Implemented so far: domain model.
 > The implementation follows [docs/roadmap.md](docs/roadmap.md).
 
 ## Scope

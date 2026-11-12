@@ -32,6 +32,7 @@ parameters:
         noExtends:
             classesAllowedToBeExtended:
                 - DomainException
+                - TheBeardedBear\UrssafAttestationsVerificationCodeSecurite\Domain\Exception\DomainException
                 - LogicException
                 - RuntimeException
                 # Framework extension points without an interface alternative (bridges only).

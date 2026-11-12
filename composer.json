@@ -4,7 +4,8 @@
     "license": "proprietary",
     "type": "symfony-bundle",
     "require": {
-        "php": ">=8.2"
+        "php": ">=8.2",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "carthage-software/mago": "^1.59",
