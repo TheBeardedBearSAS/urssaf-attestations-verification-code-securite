@@ -1,7 +1,7 @@
 # ADR 0000 — Reference architecture inherited from `urssaf-tiers-prestations`
 
 - Status: accepted
-- Reference: `thebeardedbear/urssaf-tiers-prestations`, commit `6f6e290` (README "Architecture", `docs/api-reference.md` §4,
+- Reference: `thebeardedbear/urssaf-tiers-prestations`, commit `6f6e290` (since squash-merged into `1aab404` on its `main`) (README "Architecture", `docs/api-reference.md` §4,
   `docs/workflow.md`, `docs/symfony.md`, `docs/doctrine.md`, `docs/testing.md`, `docs/standalone.md`, `deptrac.yaml`,
   `phpstan.neon.dist`, `mago.toml`, `rector.php`).
 
@@ -45,4 +45,4 @@ Any new decision, or any departure from the reference, gets its own record `docs
 - Decisions 10–12 and 14 are deliberately dropped. Their records (ADR 0001, 0004) say what would bring them back
   (published quotas, a verification log to persist).
 - New records for this package: 0001 stateless SDK, 0002 verification result model, 0003 batching, 0004 quotas and
-  retry, 0005 `domaine` parameter, 0006 error codes, 0007 static analysis on the minimum PHP version.
+  retry, 0005 `domaine` parameter, 0006 error codes, 0007 static analysis on the minimum PHP version, 0008 Symfony Flex recipe.

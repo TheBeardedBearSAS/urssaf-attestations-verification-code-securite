@@ -59,7 +59,7 @@ See [docs/standalone.md](docs/standalone.md).
 
 ### Symfony
 
-Register the bundle in `config/bundles.php`:
+With the private Flex endpoint, `composer require` registers and configures the bundle (see [installation with Symfony Flex](docs/symfony.md#installation-with-symfony-flex)); otherwise, register it by hand in `config/bundles.php`:
 
 ```php
 return [

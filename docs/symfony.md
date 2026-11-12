@@ -6,7 +6,35 @@ Bundle class: `TheBeardedBear\UrssafAttestationsVerificationCodeSecurite\Bridge\
 The package is stateless ([ADR 0001](adr/0001-stateless-sdk.md)): the bundle needs no database, no Messenger, no
 Scheduler and no lock. The only state it shares is the cache of the OAuth2 access tokens.
 
-## Installation
+## Installation with Symfony Flex
+
+The package is proprietary, so its recipe cannot go to the public `symfony/recipes-contrib` repository
+([ADR 0008](adr/0008-symfony-flex-recipe.md)). It lives in `recipe/thebeardedbear/urssaf-attestations-verification-code-securite/<version>/`
+(manifest and copied files); `bin/build-flex-endpoint <output-dir> <base-url>` turns it into a private Flex endpoint
+(`index.json` and one JSON file per recipe), built by the `flex-endpoint` job of the CI (artifact `flex-endpoint`, base
+URL from the `FLEX_ENDPOINT_URL` repository variable). Serve those files over HTTPS at `<base-url>` and declare the
+endpoint in the `composer.json` of the application:
+
+```json
+{
+    "extra": {
+        "symfony": {
+            "endpoint": ["https://<flex-endpoint-host>/urssaf/index.json", "flex://defaults"]
+        }
+    }
+}
+```
+
+`composer require thebeardedbear/urssaf-attestations-verification-code-securite` then registers the bundle, copies a
+commented `config/packages/urssaf_attestations_verification_code_securite.yaml` (the simulated gateway in the `test`
+environment) and adds `URSSAF_ENV`, `URSSAF_CLIENT_ID` and `URSSAF_CLIENT_SECRET` to `.env`. Check the result with
+`php bin/console urssaf:check`. A test boots the bundle with the copied configuration, so that the recipe follows the
+configuration tree. Add a new version directory when a release changes the recipe (Flex picks the highest version not
+above the installed package version).
+
+Without the endpoint, do these steps by hand (next section).
+
+## Manual installation
 
 ```sh
 composer require thebeardedbear/urssaf-attestations-verification-code-securite
@@ -57,7 +85,7 @@ Validation rules enforced at container build time:
 
 - `credentials` and `credentials_provider` are mutually exclusive, and one of them is required.
 - `environment` must be `sandbox` or `production` (an environment variable placeholder is resolved, and checked, at runtime).
-- `gateway.simulated` cannot be used with a literal `environment: production`. An `%env()%` placeholder is not resolved when the container is compiled, so `environment: '%env(URSSAF_ENV)%'` is not checked: the option belongs in test-only configuration (`config/packages/test/`), never in the shared one.
+- `gateway.simulated` cannot be used with a literal `environment: production`. An `%env()%` placeholder is not resolved when the container is compiled, so `environment: '%env(URSSAF_ENV)%'` is not checked: the option belongs in test-only configuration (a `when@test` block, as the recipe does, or `config/packages/test/`), never in a configuration that applies to production.
 - `token_safety_margin` must not be negative, `http_timeout` must be at least `0.1`.
 - `domain` must be `URSSAF`, `ISU` or `null`.
 
