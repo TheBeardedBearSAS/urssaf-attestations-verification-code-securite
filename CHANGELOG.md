@@ -24,3 +24,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   PSR-16 or in-memory token store, GET single verification (configurable `domaine`, default `URSSAF`), POST multiple
   verification (1–100 codes), error mapping (`UrssafRequestRejected`, `UrssafAuthenticationFailed`, retryable
   `UrssafUnavailable` with `Retry-After` on 429/500/503).
+- Application queries `VerifyCertificate` and `VerifyCertificates` (chunked by 100, input order preserved, an empty input makes no call).
+- Framework-free entry point `Standalone\UrssafAttestationsVerificationBuilder` (`docs/standalone.md`).
+- In-memory `Testing\SimulatedCertificateVerificationGateway` for host applications' tests (`docs/testing.md`).

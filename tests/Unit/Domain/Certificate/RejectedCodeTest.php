@@ -18,12 +18,12 @@ final class RejectedCodeTest extends TestCase
     public function testKnownFault(): void
     {
         $code = SecurityCode::fromString('ABC');
-        $result = RejectedCode::of($code, 'FUNC201', 'Attestation perimee');
+        $result = RejectedCode::of($code, 'FUNC201', 'Attestation perimée depuis le 01/03/2019');
 
         static::assertSame($code, $result->securityCode());
         static::assertSame('FUNC201', $result->faultCode());
         static::assertSame(FaultCode::Expired, $result->fault());
-        static::assertSame('Attestation perimee', $result->faultName());
+        static::assertSame('Attestation perimée depuis le 01/03/2019', $result->faultName());
         static::assertFalse($result->isValid());
     }
 
