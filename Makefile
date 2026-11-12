@@ -7,6 +7,9 @@
 
 PHP := docker compose run --rm php
 PHP_XDEBUG := docker compose run --rm -e XDEBUG_MODE=coverage php
+# Static analysis always runs on the minimum supported PHP (8.2), like the CI `quality` jobs: type-coverage requires
+# typed class constants as soon as PHPStan runs on PHP 8.3+, a syntax PHP 8.2 rejects (docs/adr/0007).
+PHP_ANALYSIS := PHP_VERSION=8.2 docker compose run --rm php
 # Default suites = unit + functional, limited to the directories that exist (PHPUnit fails on a missing one).
 SUITES := $(shell for s in Unit Functional; do [ -d tests/$$s ] && echo $$s; done | tr A-Z a-z | paste -sd, -)
 UNIT_FUNCTIONAL := --testsuite=$(SUITES)
@@ -41,7 +44,7 @@ test-functional: ## Run functional tests
 	$(PHP) vendor/bin/phpunit --testsuite=functional
 
 test-contract: ## Run live sandbox contract tests (needs URSSAF_SANDBOX_CLIENT_ID/SECRET)
-	docker compose run --rm -e URSSAF_SANDBOX_CLIENT_ID -e URSSAF_SANDBOX_CLIENT_SECRET -e URSSAF_SANDBOX_BASE_URI php vendor/bin/phpunit --testsuite=contract
+	docker compose run --rm -e URSSAF_SANDBOX_CLIENT_ID -e URSSAF_SANDBOX_CLIENT_SECRET -e URSSAF_SANDBOX_BASE_URI -e URSSAF_SANDBOX_VALID_SECURITY_CODE -e URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE php vendor/bin/phpunit --testsuite=contract
 
 coverage: ## Coverage (pcov): text + clover + html in var/coverage, enforce 100% lines/methods/classes
 	$(PHP) vendor/bin/phpunit $(UNIT_FUNCTIONAL) --coverage-text --coverage-clover var/coverage/clover.xml --coverage-html var/coverage/html --coverage-xml var/coverage/coverage-xml --log-junit var/coverage/junit.xml
@@ -54,8 +57,8 @@ infection: ## Mutation testing (100% MSI); runs its own initial test pass (never
 	$(PHP) vendor/bin/infection --min-msi=100 --min-covered-msi=100 --threads=max --show-mutations --no-progress \
 		--test-framework-options="$(UNIT_FUNCTIONAL)"
 
-phpstan: ## PHPStan level max
-	$(PHP) vendor/bin/phpstan analyse --memory-limit=-1 --no-progress
+phpstan: ## PHPStan level max (always on PHP 8.2, see docs/adr/0007)
+	$(PHP_ANALYSIS) vendor/bin/phpstan analyse --memory-limit=-1 --no-progress
 
 mago: ## Mago lint + analyze (never `mago fmt`)
 	$(PHP) vendor/bin/mago lint --minimum-fail-level=note

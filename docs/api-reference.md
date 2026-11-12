@@ -14,7 +14,7 @@ the version in the **file name of the published PDF** (the most detailed source)
 when the PDF is not versioned. The PDF revision history stops at 1.2. Field names, codes and wire values below are reproduced
 verbatim from the specification (they are French by design); everything else in the package is English.
 
-> Status: specification only. Nothing below is implemented yet; see [roadmap.md](roadmap.md).
+> Status: implemented (see the [CHANGELOG](../CHANGELOG.md)); decisions in §4 and [docs/adr](adr/).
 
 ---
 
@@ -176,23 +176,35 @@ pour un appel est limité à 100" (to become `FUNC016`). Fixtures: `verify_many_
 
 ## 4. Package decisions derived from the specification
 
-1. **Verification result is a sum type.** Each item maps to either a *valid certificate* (with `infosSecurisation`) or
-   a *rejected code* (`FUNC201`/`FUNC202`/`FUNC203`, unknown fault codes preserved raw). An HTTP 200 never means
-   "valid" on its own.
-2. **Batching.** `verifyMany()` chunks inputs by 100 and preserves the input order; duplicates are sent as given
-   (the official example contains a duplicate).
-3. **Dates.** `date` is parsed as `DD/MM/YYYY` in `Europe/Paris`; ASAA dates as RFC 3339 instants.
-4. **`domaine`.** TBD: send `domaine` (configurable, default `URSSAF`) until a contract test against the sandbox
-   proves it can be dropped.
+Architecture decisions are recorded in [docs/adr/](adr/) (ADR 0000 summarises those inherited from
+`urssaf-tiers-prestations`).
+
+1. **Verification result is a sum type** ([ADR 0002](adr/0002-verification-result-model.md)). Each item maps to either a
+   *verified certificate* (`infosSecurisation`) or a *rejected code* (`FUNC201`/`FUNC202`/`FUNC203`, unknown fault codes
+   preserved raw). An item must carry exactly one of the two; anything else is an unexpected response. An HTTP 200
+   never means "valid" on its own.
+2. **Batching** ([ADR 0003](adr/0003-batching.md)). `verifyMany()` sends 1–100 codes per call (never an empty or
+   oversized list); the handler chunks inputs by 100 and preserves the input order; duplicates are sent as given (the
+   official example contains a duplicate). An empty input returns no result without calling URSSAF.
+3. **Dates.** `date` is parsed strictly as `DD/MM/YYYY` into a calendar date (the `Europe/Paris` zone only matters when a
+   caller turns it into an instant); ASAA dates as RFC 3339 instants.
+4. **`domaine`** ([ADR 0005](adr/0005-domaine-parameter.md)). Sent on the GET operation, configurable (`URSSAF`
+   default, `ISU`, or `null` to omit it), until a contract test against the sandbox proves it can be dropped.
 5. **Nature-specific data.** Modelled as one value object per key (AMP, AVG, CSG, CFP, EPM, FRS, CAAE, ASAA); unknown
-   keys are ignored but logged.
-6. **Personal data.** `nir`, `denomination`, `nomArtisteAuteur`/`prenomArtisteAuteur` are personal data: never logged.
+   keys are ignored and their name is logged. Values whose format is not specified stay raw strings.
+6. **Personal data.** `nir`, `denomination`, `nomArtisteAuteur`/`prenomArtisteAuteur` are personal data: never logged and
+   masked in `__debugInfo()`.
+7. **Quotas** ([ADR 0004](adr/0004-quotas-and-retry.md)). No client-side rate limiter (values not published); HTTP 429 is
+   a retryable failure carrying `Retry-After`. No automatic retry inside the package.
+8. **Errors** ([ADR 0006](adr/0006-error-codes.md)). Request-level codes `FUNC013`, `FUNC015`, `FUNC016` (announced),
+   `ERR_TECHNIQUE`; unknown codes kept raw. Optional fields: only `codeSecurite` is required on a result item.
 
 ---
 
 ## 5. Open points
 
-- `domaine`: required by the PDF v1.2, absent from the Swagger v1.0.1. To be confirmed on the sandbox.
+- `domaine`: required by the PDF v1.2, absent from the Swagger v1.0.1. To be confirmed on the sandbox. Contract test ready (`SandboxContractTest`, GET with and without `domaine`); closed only once the whole suite passes
+  with `URSSAF_SANDBOX_VALID_SECURITY_CODE` set.
 - Sandbox host and availability (catalogue lists production only).
 - Quota values (not published).
 - Nature `CAP_*` has no dedicated `infosSecurisationSpecifiques*` key; `CAAE` key vs `CAA_*` natures mapping to
@@ -200,3 +212,10 @@ pour un appel est limité à 100" (to become `FUNC016`). Fixtures: `verify_many_
 - Error payload for security errors (400/401/403/512) not documented.
 - Formats of `codeSecurite`, `siret`, `siren`, `nir`, `numExt` are not specified (only examples): local validation
   stays minimal (non-empty) until confirmed.
+- Swagger v1.0.1 declares `InfosSecurisationSpecifiquesAVGDto` and `InfosSecurisationSpecifiquesCFPDto` without any
+  property; the PDF lists their fields (AVG = AMP + `dernierePeriodeAnalysee`, `masseSalariale`, `effectif`; CFP =
+  `numExt`, `etablissement`). The package follows the PDF.
+- Swagger v1.0.1 declares only HTTP 400 and 401; the PDF adds 403, 429, 500 and 512.
+- The PDF POST example targets `https://api.c1.giin.urssaf.fr` (an internal host?) instead of `api.urssaf.fr`.
+- No official example exists for AMP, AVG, CFP, EPM, FRS, CAAE and ASAA payloads: their tests use synthetic payloads
+  built from the field lists above.

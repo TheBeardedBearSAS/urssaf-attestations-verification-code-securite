@@ -12,4 +12,5 @@ final class UrssafEndpoints
     public const TOKEN_PATH = '/api/oauth/v1/token';
     public const TOKEN_SCOPE = 'attn.codes_securite';
     public const API_BASE_PATH = '/attn/verification/v1';
+    public const VERIFY_PATH = '/codes_securite/verifier';
 }

@@ -1,0 +1,20 @@
+# Messages of the violation codes of the package ("<subject>.<reason>"), domain "urssaf_attestations_verification_code_securite".
+# Every shipped locale (urssaf_attestations_verification_code_securite.fr.yaml...) has the same keys in the same order;
+# override keys in the translations/ directory of the application.
+
+"access_token.empty": "The access token is required."
+"access_token.negative_margin": "The access token expiry margin must not be negative."
+"calendar_date.invalid_date": "The date does not exist."
+"calendar_date.invalid_format": "The date does not match the expected format (%expected_format%)."
+"credentials.client_id_empty": "The OAuth2 client id is required."
+"credentials.client_secret_empty": "The OAuth2 client secret is required."
+"credentials.not_found": "No credentials are configured for this tenant."
+"instant.invalid_date": "The date and time do not exist."
+"instant.invalid_format": "The date and time do not match the expected format (%expected_format%)."
+"security_code.empty": "The security code is required."
+"security_codes.count_out_of_range": "The number of security codes must be between %min% and %max%."
+"tenant_id.empty": "The tenant id is required."
+"tenant_id.too_long": "The tenant id must not exceed %max_length% characters."
+"token_safety_margin.negative": "The token safety margin must not be negative."
+"violation.invalid_code": "A violation code must be a dotted snake_case identifier such as \"subject.reason\"."
+"violation.invalid_path": "A violation path must be a dotted path such as \"address.postalCode\"."

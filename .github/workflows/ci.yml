@@ -76,6 +76,22 @@ jobs:
             exit 1
           fi
 
+  flex-endpoint:
+    # The Symfony Flex endpoint of the recipe (recipe/), as an artifact: publish its files at FLEX_ENDPOINT_URL.
+    name: flex endpoint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+      - run: bin/build-flex-endpoint var/flex-endpoint "${{ vars.FLEX_ENDPOINT_URL || 'https://flex.invalid/urssaf' }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flex-endpoint
+          path: var/flex-endpoint
+
   tests:
     name: tests (PHP ${{ matrix.php }}, ${{ matrix.dependencies }})
     runs-on: ubuntu-latest
@@ -143,7 +159,10 @@ jobs:
           retention-days: 7
 
   # Manual only: Actions > CI > Run workflow > "contract". Repository secrets URSSAF_SANDBOX_CLIENT_ID and
-  # URSSAF_SANDBOX_CLIENT_SECRET are required; URSSAF_SANDBOX_BASE_URI is an optional repository variable.
+  # URSSAF_SANDBOX_CLIENT_SECRET are required. Optional secret URSSAF_SANDBOX_VALID_SECURITY_CODE (a code known to be
+  # valid in the sandbox, it identifies a real holder: kept masked; the tests needing it are skipped without it).
+  # Optional repository variables: URSSAF_SANDBOX_BASE_URI (host override) and URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE
+  # (defaults to "xxx").
   contract:
     name: contract (URSSAF sandbox)
     if: github.event_name == 'workflow_dispatch' && inputs.contract
@@ -160,3 +179,5 @@ jobs:
           URSSAF_SANDBOX_CLIENT_ID: ${{ secrets.URSSAF_SANDBOX_CLIENT_ID }}
           URSSAF_SANDBOX_CLIENT_SECRET: ${{ secrets.URSSAF_SANDBOX_CLIENT_SECRET }}
           URSSAF_SANDBOX_BASE_URI: ${{ vars.URSSAF_SANDBOX_BASE_URI }}
+          URSSAF_SANDBOX_VALID_SECURITY_CODE: ${{ secrets.URSSAF_SANDBOX_VALID_SECURITY_CODE }}
+          URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE: ${{ vars.URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE }}
