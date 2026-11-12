@@ -9,6 +9,10 @@ use TheBeardedBear\UrssafAttestationsVerificationCodeSecurite\Infrastructure\Urs
 /**
  * Typed, defensive view over a decoded JSON document. This is the only place where untyped wire data is read:
  * every accessor either returns a well-typed value or throws {@see UnexpectedUrssafResponse}.
+ *
+ * One accessor per JSON shape read from URSSAF, hence the method count.
+ *
+ * @mago-expect lint:too-many-methods
  */
 final readonly class Payload
 {
@@ -77,6 +81,22 @@ final readonly class Payload
         }
 
         return $value;
+    }
+
+    /**
+     * JSON number of a key. Null when absent.
+     *
+     * @throws UnexpectedUrssafResponse when present but not a number
+     */
+    public function number(string $key): int|float|null
+    {
+        $value = $this->data[$key] ?? null;
+
+        if ($value === null || \is_int($value) || \is_float($value)) {
+            return $value;
+        }
+
+        throw UnexpectedUrssafResponse::invalidPayload(\sprintf('field "%s" is not a number', $key));
     }
 
     /**

@@ -20,3 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   CSG, CFP, EPM, FRS, CAAE, ASAA).
 - Wire mappers for the verification response (`DD/MM/YYYY` issue date, nature-specific keys, per-code faults) and the
   multiple-verification request; request-level error payload parser (`FUNC013`, `FUNC015`, `FUNC016`, `ERR_TECHNIQUE`).
+- HTTP gateway `UrssafHttpGateway` (built by `UrssafGatewayFactory`): OAuth2 client credentials with a pluggable PSR-6,
+  PSR-16 or in-memory token store, GET single verification (configurable `domaine`, default `URSSAF`), POST multiple
+  verification (1–100 codes), error mapping (`UrssafRequestRejected`, `UrssafAuthenticationFailed`, retryable
+  `UrssafUnavailable` with `Retry-After` on 429/500/503).

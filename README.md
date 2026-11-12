@@ -6,7 +6,7 @@ professionnelle, micro-entrepreneur turnover, …) from the security code printe
 
 Namespace: `TheBeardedBear\UrssafAttestationsVerificationCodeSecurite`.
 
-> 🚧 **Work in progress.** Implemented so far: domain model, wire mappers.
+> 🚧 **Work in progress.** Implemented so far: domain model, wire mappers, HTTP gateway.
 > The implementation follows [docs/roadmap.md](docs/roadmap.md).
 
 ## Scope
