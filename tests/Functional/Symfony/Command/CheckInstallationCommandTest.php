@@ -34,7 +34,9 @@ final class CheckInstallationCommandTest extends TestCase
 
     public function testTheCommandIsDefinedWithItsOptions(): void
     {
-        $command = (new Application(Harness::boot()->kernel))->find('urssaf:check');
+        // Keep the harness alive: it owns the kernel and the PHP handler guard (lowest dependencies register handlers).
+        $harness = Harness::boot();
+        $command = (new Application($harness->kernel))->find('urssaf:check');
 
         static::assertSame('urssaf:check', $command->getName());
         static::assertSame('Checks the URSSAF integration: credentials, authentication, token store', $command->getDescription());
