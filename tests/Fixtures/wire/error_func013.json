@@ -1,0 +1,7 @@
+[
+    {
+        "code": "FUNC013",
+        "message": "Echec de l'appel au service demandé",
+        "description": "Echec de l'appel au service : GestionAttestationsService (operation VerifierCodeSecuriteGenAttestation)"
+    }
+]

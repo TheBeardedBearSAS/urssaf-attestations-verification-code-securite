@@ -1,0 +1,302 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "L'API Attestation de verification de code de securite permet de verifier la validite d'une attestation produite par l’Urssaf a partir du code de securite.",
+    "version" : "1.0.1",
+    "title" : "API Attestations Verification Code Securite"
+  },
+  "basePath" : "/attn/verification/v1",
+  "paths" : {
+    "/codes_securite/verifier" : {
+      "get" : {
+        "summary" : "Verifier une attestation via son code de securite",
+        "operationId" : "verifierCodeSecuriteAttestationGen",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "codeSecurite",
+          "in" : "query",
+          "description" : "Le code de securite",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Verification effectuee",
+            "schema" : {
+              "$ref" : "#/definitions/VerifierCodeSecuriteAttestationGenResultatDto"
+            }
+          },
+          "400" : {
+            "description" : "Requete incorrecte ou erreur fonctionnelle lors de la recherche"
+          },
+          "401" : {
+            "description" : "Token d'authentification absent ou invalide"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Verifier plusieurs attestations via leurs codes de securite (Max 100 codes de securite)",
+        "operationId" : "verifierListeCodesSecuriteAttestationGen",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "requete",
+          "description" : "La requete",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/VerifierCodesSecuriteAttestationGenRequeteDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Verification effectuee",
+            "schema" : {
+              "$ref" : "#/definitions/VerifierCodeSecuriteAttestationGenResultatDto"
+            }
+          },
+          "400" : {
+            "description" : "Requete incorrecte ou erreur fonctionnelle lors de la recherche"
+          },
+          "401" : {
+            "description" : "Token d'authentification absent ou invalide"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "securityHeader" : {
+      "description" : "Jeton d'authentification obligatoire (Oauth2 Client Credentials)",
+      "type" : "oauth2",
+      "tokenUrl" : "https://api.urssaf.fr/api/oauth/v1/token",
+      "flow" : "application",
+      "scopes" : {
+        "attn.codes_securite" : "Acces a l'API Attestations Verification Code Securite"
+      }
+    }
+  },
+  "definitions" : {
+    "VerifierCodeSecuriteAttestationGenResultatDto" : {
+      "type" : "object",
+      "properties" : {
+        "verifierCodeSecuriteAttestationGen" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/VerifierCodeSecuriteAttestationGenDto"
+          }
+        }
+      }
+    },
+    "VerifierCodeSecuriteAttestationGenDto" : {
+      "type" : "object",
+      "properties" : {
+        "codeSecurite" : {
+          "type" : "string"
+        },
+        "infosSecurisation" : {
+          "$ref" : "#/definitions/InfosSecurisationDto"
+        },
+        "functionalFaultCodeSecurite" : {
+          "$ref" : "#/definitions/FunctionalFaultCodeSecuriteDto"
+        }
+      }
+    },
+    "InfosSecurisationDto" : {
+      "type" : "object",
+      "properties" : {
+        "hashKey" : {
+          "type" : "string"
+        },
+        "nature" : {
+          "type" : "string"
+        },
+        "denomination" : {
+          "type" : "string"
+        },
+        "codeOrganismeEmetteur" : {
+          "type" : "string"
+        },
+        "libelleOrganismeEmetteur" : {
+          "type" : "string"
+        },
+        "date" : {
+          "type" : "string"
+        },
+        "infosSecurisationSpecifiques" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/InfosSecurisationSpecifiquesDto"
+          }
+        }
+      }
+    },
+    "InfosSecurisationSpecifiquesDto" : {
+      "type" : "object",
+      "properties" : {
+        "infosSecurisationSpecifiquesAMP" : {
+          "$ref" : "#/definitions/InfosSecurisationSpecifiquesAMPDto"
+        },
+        "infosSecurisationSpecifiquesAVG" : {
+          "$ref" : "#/definitions/InfosSecurisationSpecifiquesAVGDto"
+        },
+        "infosSecurisationSpecifiquesCSG" : {
+          "$ref" : "#/definitions/InfosSecurisationSpecifiquesCSGDto"
+        },
+        "infosSecurisationSpecifiquesCFP" : {
+          "$ref" : "#/definitions/InfosSecurisationSpecifiquesCFPDto"
+        },
+        "infosSecurisationSpecifiquesEPM" : {
+          "$ref" : "#/definitions/InfosSecurisationSpecifiquesEPMDto"
+        },
+        "infosSecurisationSpecifiquesFRS" : {
+          "$ref" : "#/definitions/InfosSecurisationSpecifiquesFRSDto"
+        },
+        "infosSecurisationSpecifiquesCAAE" : {
+          "$ref" : "#/definitions/InfosSecurisationSpecifiquesCAAEDto"
+        },
+        "infosSecurisationSpecifiquesASAA" : {
+          "$ref" : "#/definitions/InfosSecurisationSpecifiquesASAADto"
+        }
+      }
+    },
+    "InfosSecurisationSpecifiquesASAADto" : {
+      "type" : "object",
+      "properties" : {
+        "nomArtisteAuteur" : {
+          "type" : "string"
+        },
+        "prenomArtisteAuteur" : {
+          "type" : "string"
+        },
+        "dateDebutDeclaration" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "dateFinDeclaration" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "InfosSecurisationSpecifiquesAMPDto" : {
+      "type" : "object",
+      "properties" : {
+        "siren" : {
+          "type" : "string"
+        },
+        "nir" : {
+          "type" : "string"
+        },
+        "etablissement" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EtablissementForCodeSecuDto"
+          }
+        }
+      }
+    },
+    "InfosSecurisationSpecifiquesAVGDto" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/InfosSecurisationSpecifiquesAMPDto"
+      }, {
+        "properties" : {
+          "dernierePeriodeAnalysee" : {
+            "type" : "string"
+          },
+          "masseSalariale" : {
+            "type" : "string"
+          },
+          "effectif" : {
+            "type" : "string"
+          }
+        }
+      } ]
+    },
+    "InfosSecurisationSpecifiquesCAAEDto" : {
+      "type" : "object",
+      "properties" : {
+        "etablissement" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EtablissementForCodeSecuDto"
+          }
+        }
+      }
+    },
+    "InfosSecurisationSpecifiquesCFPDto" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/InfosSecurisationSpecifiquesCSGDto"
+      } ]
+    },
+    "InfosSecurisationSpecifiquesCSGDto" : {
+      "type" : "object",
+      "properties" : {
+        "numExt" : {
+          "type" : "string"
+        },
+        "etablissement" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EtablissementForCodeSecuDto"
+          }
+        }
+      }
+    },
+    "InfosSecurisationSpecifiquesEPMDto" : {
+      "type" : "object",
+      "properties" : {
+        "etablissement" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EtablissementForCodeSecuDto"
+          }
+        }
+      }
+    },
+    "InfosSecurisationSpecifiquesFRSDto" : {
+      "type" : "object",
+      "properties" : {
+        "etablissement" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EtablissementForCodeSecuDto"
+          }
+        }
+      }
+    },
+    "EtablissementForCodeSecuDto" : {
+      "type" : "object",
+      "properties" : {
+        "adresse" : {
+          "type" : "string"
+        },
+        "siret" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FunctionalFaultCodeSecuriteDto" : {
+      "type" : "object",
+      "properties" : {
+        "faultName" : {
+          "type" : "string"
+        },
+        "faultCode" : {
+          "type" : "string"
+        }
+      }
+    },
+    "VerifierCodesSecuriteAttestationGenRequeteDto" : {
+      "type" : "object",
+      "properties" : {
+        "listeCodesSecurite" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  },
+  "host" : "api.urssaf.fr"
+}

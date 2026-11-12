@@ -1,0 +1,28 @@
+{
+    "verifierCodeSecuriteAttestationGen": [
+        {
+            "codeSecurite": "42TROLLQU3DT999",
+            "infosSecurisation": {
+                "hashKey": "42TROLLQU3DT999",
+                "nature": "CSG_RSI",
+                "denomination": "Cooper Sheldon",
+                "codeOrganismeEmetteur": "837",
+                "libelleOrganismeEmetteur": "Urssaf AUVERGNE",
+                "date": "02/10/2020",
+                "infosSecurisationSpecifiques": [
+                    {
+                        "infosSecurisationSpecifiquesCSG": {
+                            "numExt": "837000000022444999",
+                            "etablissement": [
+                                {
+                                    "adresse": "45 Boulevard Pasteur 63000 Clermont-Ferrand",
+                                    "siret": "31456972500097"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

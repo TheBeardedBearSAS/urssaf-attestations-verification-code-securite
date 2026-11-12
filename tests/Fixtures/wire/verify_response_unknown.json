@@ -1,0 +1,11 @@
+{
+    "verifierCodeSecuriteAttestationGen": [
+        {
+            "codeSecurite": "xxx",
+            "functionalFaultCodeSecurite": {
+                "faultName": "Attestation inconnue",
+                "faultCode": "FUNC202"
+            }
+        }
+    ]
+}

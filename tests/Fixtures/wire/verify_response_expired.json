@@ -1,0 +1,11 @@
+{
+    "verifierCodeSecuriteAttestationGen": [
+        {
+            "codeSecurite": "4W6UKDR41G457CW",
+            "functionalFaultCodeSecurite": {
+                "faultName": "Attestation perimée depuis le 01/03/2019",
+                "faultCode": "FUNC201"
+            }
+        }
+    ]
+}

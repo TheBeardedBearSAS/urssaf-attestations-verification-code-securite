@@ -1,0 +1,11 @@
+{
+    "verifierCodeSecuriteAttestationGen": [
+        {
+            "codeSecurite": "YXDDF5V3IIZSOPS",
+            "functionalFaultCodeSecurite": {
+                "faultName": "Donnée de sécurisation manquante",
+                "faultCode": "FUNC203"
+            }
+        }
+    ]
+}
