@@ -18,3 +18,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Domain model: `SecurityCode`, certificate natures (§3.1), per-code fault codes (`FUNC201`–`FUNC203`), verification
   result sum type (`VerifiedCertificate` | `RejectedCode`) and one value object per nature-specific data key (AMP, AVG,
   CSG, CFP, EPM, FRS, CAAE, ASAA).
+- Wire mappers for the verification response (`DD/MM/YYYY` issue date, nature-specific keys, per-code faults) and the
+  multiple-verification request; request-level error payload parser (`FUNC013`, `FUNC015`, `FUNC016`, `ERR_TECHNIQUE`).

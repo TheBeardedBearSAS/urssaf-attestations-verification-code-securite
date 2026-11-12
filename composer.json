@@ -5,7 +5,9 @@
     "type": "symfony-bundle",
     "require": {
         "php": ">=8.2",
-        "ext-mbstring": "*"
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "psr/log": "^2.0 || ^3.0"
     },
     "require-dev": {
         "carthage-software/mago": "^1.59",
