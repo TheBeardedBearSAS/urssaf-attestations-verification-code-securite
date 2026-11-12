@@ -28,3 +28,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Framework-free entry point `Standalone\UrssafAttestationsVerificationBuilder` (`docs/standalone.md`).
 - In-memory `Testing\SimulatedCertificateVerificationGateway` for host applications' tests (`docs/testing.md`).
 - Symfony bundle `UrssafAttestationsVerificationCodeSecuriteBundle` (`urssaf_attestations_verification_code_securite`): configuration (environment, base URI, `domain`, credentials per tenant or provider, token cache pool, simulated gateway), public query handlers, commands `urssaf:certificate:verify` and `urssaf:check`, translations (en, fr) of the violation codes (`docs/symfony.md`).
+- Opt-in contract tests against the URSSAF sandbox (`make test-contract`, manual CI job `contract`), first target: confirm whether `domaine` can be omitted.

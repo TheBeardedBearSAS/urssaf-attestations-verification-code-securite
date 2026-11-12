@@ -14,7 +14,7 @@ the version in the **file name of the published PDF** (the most detailed source)
 when the PDF is not versioned. The PDF revision history stops at 1.2. Field names, codes and wire values below are reproduced
 verbatim from the specification (they are French by design); everything else in the package is English.
 
-> Status: specification only. Nothing below is implemented yet; see [roadmap.md](roadmap.md).
+> Status: implemented (see the [CHANGELOG](../CHANGELOG.md)); decisions in §4 and [docs/adr](adr/).
 
 ---
 
@@ -203,7 +203,8 @@ Architecture decisions are recorded in [docs/adr/](adr/) (ADR 0000 summarises th
 
 ## 5. Open points
 
-- `domaine`: required by the PDF v1.2, absent from the Swagger v1.0.1. To be confirmed on the sandbox.
+- `domaine`: required by the PDF v1.2, absent from the Swagger v1.0.1. To be confirmed on the sandbox. Contract test ready (`SandboxContractTest`, GET with and without `domaine`); closed only once the whole suite passes
+  with `URSSAF_SANDBOX_VALID_SECURITY_CODE` set.
 - Sandbox host and availability (catalogue lists production only).
 - Quota values (not published).
 - Nature `CAP_*` has no dedicated `infosSecurisationSpecifiques*` key; `CAAE` key vs `CAA_*` natures mapping to

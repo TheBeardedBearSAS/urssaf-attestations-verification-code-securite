@@ -1,5 +1,7 @@
 # Implementation roadmap
 
+> Status: items 1–5 delivered; item 6 (contract tests) delivered, the open points of api-reference §5 remain until the tests run against the sandbox.
+
 Specification: [api-reference.md](api-reference.md). Architecture, conventions and quality gates are the same as in
 `thebeardedbear/urssaf-tiers-prestations` (hexagonal layers enforced by Deptrac, PSR-only runtime, Symfony and
 Doctrine bridges, 100 % coverage and MSI).
@@ -52,7 +54,7 @@ Doctrine bridges, 100 % coverage and MSI).
 - Unit: value objects, mappers against `tests/Fixtures/wire/*.json`, handlers with fake gateway.
 - Functional: Symfony bundle wiring.
 - Contract (`make test-contract`, manual CI job): sandbox credentials `URSSAF_SANDBOX_CLIENT_ID/SECRET`, optional
-  `URSSAF_SANDBOX_BASE_URI`; a known valid code and a known unknown code (to add as repository variables). First
+  `URSSAF_SANDBOX_BASE_URI`; a known valid code and a known unknown code (`URSSAF_SANDBOX_VALID_SECURITY_CODE` / `URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE`, the valid one as a repository secret, the unknown one as a variable). First
   goal: settle the `domaine` open point.
 
 ## Order of work

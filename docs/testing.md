@@ -55,3 +55,22 @@ self::assertCount(1, $urssaf->calls());
 
 The builder still needs a transport, credentials and configuration (they are not used): any PSR-18 client works. See
 [standalone.md](standalone.md).
+
+## Contract tests (URSSAF sandbox)
+
+The contract tests (`tests/Contract/`, suite `contract`) call the URSSAF sandbox to check the package against the real
+API. They are opt-in: `make test-contract` runs them, and the manual CI job `contract` runs them with the repository
+secrets. Variables:
+
+| Variable | Required | Meaning |
+|---|---|---|
+| `URSSAF_SANDBOX_CLIENT_ID` | yes | Client id of the sandbox credentials. |
+| `URSSAF_SANDBOX_CLIENT_SECRET` | yes | Client secret of the sandbox credentials. |
+| `URSSAF_SANDBOX_BASE_URI` | no | Overrides the base URI of the sandbox. |
+| `URSSAF_SANDBOX_VALID_SECURITY_CODE` | no | A code known to be valid in the sandbox (a repository secret in CI); the tests needing it are skipped without it. |
+| `URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE` | no | A code known to be unknown in the sandbox. Default `xxx`. |
+
+Without the two credentials, every contract test is skipped.
+
+The `domaine` open point (api-reference §5, ADR 0005) is closed only when the whole suite passes with a valid code:
+the unknown-code tests prove the parameter is not required, the valid-code pair proves it is ignored.
