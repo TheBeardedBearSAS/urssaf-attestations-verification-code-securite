@@ -86,6 +86,16 @@
         "symfony/lock": "<6.4.3",
         "symfony/messenger": "<6.4.3"
     },
+    "suggest": {
+        "nyholm/psr7": "PSR-17 factories used by the Symfony bridge default HTTP client",
+        "symfony/config": "Required by the Symfony bridge (bundle configuration)",
+        "symfony/console": "Required by the Symfony bridge (console commands)",
+        "symfony/dependency-injection": "Required by the Symfony bridge",
+        "symfony/framework-bundle": "Required to use the Symfony bundle",
+        "symfony/http-client": "PSR-18 compatible HTTP client for the API",
+        "symfony/http-kernel": "Required by the Symfony bridge (bundle)",
+        "symfony/translation": "Translates the violation codes (English and French shipped)"
+    },
     "autoload": {
         "psr-4": {
             "TheBeardedBear\\UrssafAttestationsVerificationCodeSecurite\\": "src/"

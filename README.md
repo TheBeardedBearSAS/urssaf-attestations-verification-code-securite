@@ -6,7 +6,7 @@ professionnelle, micro-entrepreneur turnover, …) from the security code printe
 
 Namespace: `TheBeardedBear\UrssafAttestationsVerificationCodeSecurite`.
 
-> 🚧 **Work in progress.** Implemented so far: domain model, wire mappers, HTTP gateway, application queries, standalone builder, test simulator.
+> 🚧 **Work in progress.** Implemented so far: domain model, wire mappers, HTTP gateway, application queries, standalone builder, test simulator, Symfony bundle.
 > The implementation follows [docs/roadmap.md](docs/roadmap.md).
 
 ## Scope
@@ -25,6 +25,7 @@ OAuth2 client credentials, scope `attn.codes_securite`, base URL `https://api.ur
 - [docs/adr/](docs/adr/) — architecture decision records (0000: decisions inherited from the reference package).
 - [docs/standalone.md](docs/standalone.md) — usage without a framework.
 - [docs/testing.md](docs/testing.md) — testing an application that uses the package.
+- [docs/symfony.md](docs/symfony.md) — Symfony bundle.
 - [docs/openapi/](docs/openapi/) — official OpenAPI contract(s) from the URSSAF API portal.
 - [docs/reference/](docs/reference/) — official URSSAF documentation.
 - Catalogue page: https://portailapi.urssaf.fr/fr/catalogue-api/prd/avcs

@@ -36,7 +36,6 @@ parameters:
                 - LogicException
                 - RuntimeException
                 # Framework extension points without an interface alternative (bridges only).
-                - Doctrine\DBAL\Types\Type
                 - Symfony\Component\HttpKernel\Bundle\AbstractBundle
                 - Symfony\Component\Console\Command\Command
                 - Symfony\Component\HttpKernel\Kernel

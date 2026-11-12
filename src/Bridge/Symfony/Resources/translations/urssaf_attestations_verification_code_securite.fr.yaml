@@ -1,0 +1,20 @@
+# Messages français des codes de violation du package ("<sujet>.<raison>"), domaine "urssaf_attestations_verification_code_securite".
+# Mêmes clés, dans le même ordre, que urssaf_attestations_verification_code_securite.en.yaml ; surchargez les clés
+# dans le répertoire translations/ de l'application.
+
+"access_token.empty": "Le jeton d'accès est obligatoire."
+"access_token.negative_margin": "La marge d'expiration du jeton d'accès ne doit pas être négative."
+"calendar_date.invalid_date": "La date n'existe pas."
+"calendar_date.invalid_format": "La date ne respecte pas le format attendu (%expected_format%)."
+"credentials.client_id_empty": "L'identifiant client OAuth2 est obligatoire."
+"credentials.client_secret_empty": "Le secret client OAuth2 est obligatoire."
+"credentials.not_found": "Aucun identifiant n'est configuré pour ce tenant."
+"instant.invalid_date": "La date et l'heure n'existent pas."
+"instant.invalid_format": "La date et l'heure ne respectent pas le format attendu (%expected_format%)."
+"security_code.empty": "Le code de sécurité est obligatoire."
+"security_codes.count_out_of_range": "Le nombre de codes de sécurité doit être compris entre %min% et %max%."
+"tenant_id.empty": "L'identifiant du tenant est obligatoire."
+"tenant_id.too_long": "L'identifiant du tenant ne doit pas dépasser %max_length% caractères."
+"token_safety_margin.negative": "La marge de sécurité du jeton ne doit pas être négative."
+"violation.invalid_code": "Un code de violation doit être un identifiant snake_case pointé tel que \"sujet.raison\"."
+"violation.invalid_path": "Un chemin de violation doit être un chemin pointé tel que \"adresse.codePostal\"."
