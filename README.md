@@ -111,7 +111,7 @@ between the layers, and the runtime depends on PSR interfaces only. The referenc
 - [docs/testing.md](docs/testing.md) — testing an application that uses the package.
 - [docs/symfony.md](docs/symfony.md) — Symfony bundle.
 - [docs/openapi/](docs/openapi/) — official OpenAPI contract(s) from the URSSAF API portal.
-- [docs/reference/](docs/reference/) — official URSSAF documentation.
+- `docs/reference/` — official URSSAF documentation: not versioned (URSSAF documents), download it from the links in [docs/api-reference.md](docs/api-reference.md) into this local, git-ignored folder.
 - Catalogue page: https://portailapi.urssaf.fr/fr/catalogue-api/prd/avcs
 
 ## Requirements
