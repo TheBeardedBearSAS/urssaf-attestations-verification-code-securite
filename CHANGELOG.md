@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-15
+
 ### Added
 
 - Benchmarks (`tests/Benchmark`, `make bench`, PHPBench isolated in `tools/phpbench`): validation of a full batch of
@@ -21,6 +23,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   for Composer).
 - Dockerfile linted by hadolint (`make hadolint`, part of `make ci`, CI job `hadolint`); the development image runs as
   a non-root user by default.
+- CI: GitHub Actions updated to their latest major versions (Dependabot).
+- SonarQube Cloud coverage measured on the package code only (`sonar.coverage.exclusions`); live proof badges in
+  the README (Codecov, Stryker mutation score, SonarQube Cloud, OpenSSF Scorecard).
 
 - README: maintainer (The Bearded Bear), the other URSSAF packages and professional support; composer
   `authors` now points to https://the-bearded-bear.com.
@@ -65,5 +70,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   `SECURITY.md`, and a notice in the README stating that the package is unofficial and not affiliated with URSSAF.
 - The official URSSAF documents are no longer versioned: `docs/reference/` is a local, git-ignored folder.
 
-[Unreleased]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/releases/tag/v0.1.0
