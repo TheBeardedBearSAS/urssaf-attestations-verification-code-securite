@@ -8,21 +8,15 @@ Scheduler and no lock. The only state it shares is the cache of the OAuth2 acces
 
 ## Installation with Symfony Flex
 
-The package is proprietary, so its recipe cannot go to the public `symfony/recipes-contrib` repository
-([ADR 0008](adr/0008-symfony-flex-recipe.md)). It lives in `recipe/thebeardedbear/urssaf-attestations-verification-code-securite/<version>/`
-(manifest and copied files); `bin/build-flex-endpoint <output-dir> <base-url>` turns it into a private Flex endpoint
-(`index.json` and one JSON file per recipe), built by the `flex-endpoint` job of the CI (artifact `flex-endpoint`, base
-URL from the `FLEX_ENDPOINT_URL` repository variable). Serve those files over HTTPS at `<base-url>` and declare the
-endpoint in the `composer.json` of the application:
+The recipe is published on the public `symfony/recipes-contrib` repository
+([ADR 0009](adr/0009-flex-recipe-on-recipes-contrib.md), submitted in
+[symfony/recipes-contrib#2120](https://github.com/symfony/recipes-contrib/pull/2120); until it is merged, install the
+bundle by hand, next section). Its source lives in
+`recipe/thebeardedbear/urssaf-attestations-verification-code-securite/<version>/` (manifest and copied files). Contrib
+recipes must be allowed once in the application:
 
-```json
-{
-    "extra": {
-        "symfony": {
-            "endpoint": ["https://<flex-endpoint-host>/urssaf/index.json", "flex://defaults"]
-        }
-    }
-}
+```sh
+composer config extra.symfony.allow-contrib true
 ```
 
 `composer require thebeardedbear/urssaf-attestations-verification-code-securite` then registers the bundle, copies a
@@ -30,9 +24,9 @@ commented `config/packages/urssaf_attestations_verification_code_securite.yaml` 
 environment) and adds `URSSAF_ENV`, `URSSAF_CLIENT_ID` and `URSSAF_CLIENT_SECRET` to `.env`. Check the result with
 `php bin/console urssaf:check`. A test boots the bundle with the copied configuration, so that the recipe follows the
 configuration tree. Add a new version directory when a release changes the recipe (Flex picks the highest version not
-above the installed package version).
+above the installed package version), and submit it to `symfony/recipes-contrib` in the same form.
 
-Without the endpoint, do these steps by hand (next section).
+Without the recipe, do these steps by hand (next section).
 
 ## Manual installation
 
