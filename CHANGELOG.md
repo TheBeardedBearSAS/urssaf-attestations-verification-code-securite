@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-15
+
 ### Added
 
 - Project skeleton: Docker tooling, quality gates (`make ci`) and GitHub Actions CI, identical to the other URSSAF
@@ -36,3 +38,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The package is open source under the MIT license (previously proprietary). Added `CONTRIBUTING.md` and
   `SECURITY.md`, and a notice in the README stating that the package is unofficial and not affiliated with URSSAF.
 - The official URSSAF documents are no longer versioned: `docs/reference/` is a local, git-ignored folder.
+
+[Unreleased]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/releases/tag/v0.1.0
