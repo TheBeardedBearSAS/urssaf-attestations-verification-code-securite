@@ -1,5 +1,10 @@
 # URSSAF "API Attestations Vérification Code Sécurité" for PHP
 
+<!-- the-bearded-bear:badges:start -->
+[![CI](https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/actions/workflows/ci.yml?query=branch%3Amain)
+[![Packagist version](https://img.shields.io/packagist/v/thebeardedbear/urssaf-attestations-verification-code-securite)](https://packagist.org/packages/thebeardedbear/urssaf-attestations-verification-code-securite) [![PHP version](https://img.shields.io/packagist/dependency-v/thebeardedbear/urssaf-attestations-verification-code-securite/php)](https://packagist.org/packages/thebeardedbear/urssaf-attestations-verification-code-securite) [![Downloads](https://img.shields.io/packagist/dt/thebeardedbear/urssaf-attestations-verification-code-securite)](https://packagist.org/packages/thebeardedbear/urssaf-attestations-verification-code-securite/stats) [![PHPStan level max](https://img.shields.io/badge/PHPStan-level%20max-brightgreen)](phpstan.neon.dist) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+<!-- the-bearded-bear:badges:end -->
+
 `thebeardedbear/urssaf-attestations-verification-code-securite` — client, domain model and Symfony integration for the
 URSSAF API that checks the validity of a certificate (*attestation de vigilance*, CSG/CRDS, formation
 professionnelle, micro-entrepreneur turnover, …) from the security code printed on it.
@@ -131,13 +136,19 @@ PHP 8.2+. Development only needs Docker: every `make` target runs in a container
 
 ```sh
 make install     # build the image, install dependencies
-make ci          # full quality gate: cs, rector, phpstan, mago, deptrac, composer checks, guard, coverage, infection
+make ci          # full quality gate: cs, rector, phpstan, mago, deptrac, composer checks, hadolint, guard, coverage, infection
 make test        # unit + functional tests
+make bench       # benchmarks (PHPBench): security code validation, wire encoding and decoding
 make help        # every target
 ```
 
 `make ci PHP_VERSION=8.4` runs the gate on another PHP version (PHPStan always runs on 8.2, see
 [ADR 0007](docs/adr/0007-static-analysis-on-minimum-php.md)).
+
+Published proofs (public repository, `main`): the coverage report on Codecov, the full mutation report on the Stryker
+Dashboard, the SonarQube Cloud quality gate and the OpenSSF Scorecard (`.github/workflows/scorecard.yml`), linked from
+the badges at the top of this file. The benchmarks (`tests/Benchmark`, PHPBench in `tools/phpbench`, out of the package
+dependencies) run on every pull request against the base commit, and the job fails on a regression of more than 20 %.
 
 `make test-contract` runs the live sandbox tests: set `URSSAF_SANDBOX_CLIENT_ID` and `URSSAF_SANDBOX_CLIENT_SECRET` (required), optionally `URSSAF_SANDBOX_BASE_URI`, `URSSAF_SANDBOX_VALID_SECURITY_CODE`, `URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE` (default `xxx`); without them every contract test is skipped. In CI the manual `contract` job reads the credentials and the valid code from repository secrets, the other two from repository variables.
 
