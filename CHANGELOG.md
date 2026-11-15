@@ -7,11 +7,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-15
+
 ### Added
 
 - Signed releases (workflow `release.yml`): each GitHub release carries the distribution archive, its `SHA256SUMS`
   and a SLSA build provenance attestation (`*.intoto.jsonl`, Sigstore); see *Verifying a release* in SECURITY.md.
 - CodeQL analysis of the GitHub Actions workflows (workflow `codeql.yml`) on every pull request and push to `main`.
+
+### Changed
+
+- `composer.json` `homepage` now points to the project page, shown by Packagist:
+  https://the-bearded-bear.com/open-source/urssaf-attestations-verification-code-securite. The README links to it
+  and to the overview of the URSSAF packages.
 
 ## [0.1.1] - 2026-11-15
 
@@ -76,6 +84,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   `SECURITY.md`, and a notice in the README stating that the package is unofficial and not affiliated with URSSAF.
 - The official URSSAF documents are no longer versioned: `docs/reference/` is a local, git-ignored folder.
 
-[Unreleased]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/releases/tag/v0.1.0
