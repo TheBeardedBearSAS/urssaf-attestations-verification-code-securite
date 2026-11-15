@@ -1,8 +1,29 @@
 {
     "name": "thebeardedbear/urssaf-attestations-verification-code-securite",
     "description": "Client and domain model for the URSSAF \"API Attestations Vérification Code Sécurité\" (verification of URSSAF certificates by security code)",
-    "license": "proprietary",
+    "license": "MIT",
     "type": "symfony-bundle",
+    "keywords": [
+        "urssaf",
+        "api",
+        "attestation",
+        "attestation-de-vigilance",
+        "code-securite",
+        "verification",
+        "symfony-bundle"
+    ],
+    "authors": [
+        {
+            "name": "TheBeardedBear",
+            "homepage": "https://github.com/TheBeardedBearSAS"
+        }
+    ],
+    "homepage": "https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite",
+    "support": {
+        "issues": "https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/issues",
+        "source": "https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite",
+        "security": "https://github.com/TheBeardedBearSAS/urssaf-attestations-verification-code-securite/security/policy"
+    },
     "require": {
         "php": ">=8.2",
         "ext-json": "*",

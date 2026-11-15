@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Project skeleton: Docker tooling, quality gates (`make ci`) and GitHub Actions CI, identical to the other URSSAF
   packages.
-- Specification: official OpenAPI contracts (`docs/openapi/`), official documentation (`docs/reference/`), technical
+- Specification: official OpenAPI contracts (`docs/openapi/`), official documentation (links in `docs/api-reference.md`, local copy in the git-ignored `docs/reference/`), technical
   reference (`docs/api-reference.md`) and implementation roadmap (`docs/roadmap.md`).
 - Architecture decision records (`docs/adr/`): reference architecture inherited from `urssaf-tiers-prestations`
   (0000), stateless SDK, verification result model, batching, quotas and retry, `domaine` parameter, error codes.
@@ -30,3 +30,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Symfony bundle `UrssafAttestationsVerificationCodeSecuriteBundle` (`urssaf_attestations_verification_code_securite`): configuration (environment, base URI, `domain`, credentials per tenant or provider, token cache pool, simulated gateway), public query handlers, commands `urssaf:certificate:verify` and `urssaf:check`, translations (en, fr) of the violation codes (`docs/symfony.md`).
 - Opt-in contract tests against the URSSAF sandbox (`make test-contract`, manual CI job `contract`), first target: confirm whether `domaine` can be omitted.
 - Symfony Flex recipe (`recipe/`): registers the bundle, copies a commented configuration (simulated gateway in the test environment) and adds the `URSSAF_*` variables to `.env`; `bin/build-flex-endpoint` builds a private Flex endpoint, published by the CI job `flex-endpoint` (ADR 0008).
+
+### Changed
+
+- The package is open source under the MIT license (previously proprietary). Added `CONTRIBUTING.md` and
+  `SECURITY.md`, and a notice in the README stating that the package is unofficial and not affiliated with URSSAF.
+- The official URSSAF documents are no longer versioned: `docs/reference/` is a local, git-ignored folder.

@@ -5,7 +5,7 @@ It summarises the official specification:
 
 - Swagger contract: **v1.0.1** (`docs/openapi/avcs-prd.json`, production only)
 - Technical documentation PDF: **v1.2** (2020-11-03), file name `…_v1.2.1.pdf`
-  (`docs/reference/ACOSS-Documentation-API-Attestations-verificationcodesecurite_v1.2.1.pdf`)
+  (download it into `docs/reference/`, a local git-ignored folder: the official documents are not versioned)
 - Catalogue page: https://portailapi.urssaf.fr/fr/catalogue-api/prd/avcs
 - PDF: https://cedito-medias.urssaf.fr/medias/PortailAPI/files/documentationAPIs/AttestationSecurite/ACOSS-Documentation-API-Attestations-verificationcodesecurite_v1.2.1.pdf
 
@@ -13,6 +13,11 @@ The package constant `SpecVersion::CURRENT` must equal `1.2.1`. Rule shared by t
 the version in the **file name of the published PDF** (the most detailed source), falling back to the Swagger version
 when the PDF is not versioned. The PDF revision history stops at 1.2. Field names, codes and wire values below are reproduced
 verbatim from the specification (they are French by design); everything else in the package is English.
+
+> **Source and rights.** The specification, the field names, the codes and the official JSON examples quoted here come
+> from the URSSAF documents listed above and remain URSSAF's property. They are reproduced only so the package can
+> interoperate with the API, and they are not covered by this package's MIT license. In case of discrepancy, the
+> official URSSAF documentation prevails. This package is not affiliated with URSSAF.
 
 > Status: implemented (see the [CHANGELOG](../CHANGELOG.md)); decisions in §4 and [docs/adr](adr/).
 
