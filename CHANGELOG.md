@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- README: maintainer (The Bearded Bear), the other URSSAF packages and professional support; composer
+  `authors` now points to https://the-bearded-bear.com.
+
 - The Symfony Flex recipe is published on the public `symfony/recipes-contrib` repository (ADR 0009, superseding
   ADR 0008): enable contrib recipes with `composer config extra.symfony.allow-contrib true`.
 
