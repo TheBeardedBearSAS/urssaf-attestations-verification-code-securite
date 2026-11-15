@@ -159,7 +159,7 @@ Semantic Versioning. `SpecVersion::CURRENT` holds the version of the official UR
 <!-- the-bearded-bear:start -->
 ## Other URSSAF packages
 
-The same architecture, quality gate and conventions, one package per URSSAF API:
+The same architecture, quality gate and conventions, one package per URSSAF API (overview: [the-bearded-bear.com/open-source/urssaf](https://the-bearded-bear.com/open-source/urssaf)):
 
 | API | Package | Status |
 |---|---|---|
@@ -181,7 +181,7 @@ If you need help with an URSSAF integration, The Bearded Bear can help with:
 - support with a guaranteed response time, including the follow-up of URSSAF API changes;
 - custom developments on top of the package.
 
-Contact: [the-bearded-bear.com](https://the-bearded-bear.com).
+Project page and integration offer: [the-bearded-bear.com/open-source/urssaf-attestations-verification-code-securite](https://the-bearded-bear.com/open-source/urssaf-attestations-verification-code-securite).
 <!-- the-bearded-bear:end -->
 
 ## Contributing and security
