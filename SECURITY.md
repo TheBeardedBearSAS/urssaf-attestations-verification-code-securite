@@ -24,6 +24,18 @@ a company (name, SIRET, address...) in a report. Use fictitious values.
 You will get an acknowledgement within 5 working days. The fix is then prepared privately and released, and the
 advisory is published with credit to the reporter unless you ask otherwise.
 
+## Verifying a release
+
+Every GitHub release carries the distribution archive (same content as the Composer dist), its `SHA256SUMS` and a
+SLSA build provenance attestation (`*.intoto.jsonl`, a Sigstore bundle signed keylessly by the `release.yml`
+workflow). To check that an archive was built by this repository's workflow from the tagged commit:
+
+```bash
+gh release download vX.Y.Z --repo TheBeardedBearSAS/urssaf-attestations-verification-code-securite
+sha256sum --check SHA256SUMS
+gh attestation verify urssaf-attestations-verification-code-securite-vX.Y.Z.zip --repo TheBeardedBearSAS/urssaf-attestations-verification-code-securite
+```
+
 ## Scope
 
 In scope: the code of this package (HTTP client, OAuth2 token handling, validation, wire decoding of the verification
