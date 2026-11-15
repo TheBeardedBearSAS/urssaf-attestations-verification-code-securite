@@ -7,6 +7,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- The Symfony Flex recipe is published on the public `symfony/recipes-contrib` repository (ADR 0009, superseding
+  ADR 0008): enable contrib recipes with `composer config extra.symfony.allow-contrib true`.
+
+### Removed
+
+- The private Flex endpoint generator `bin/build-flex-endpoint`, the CI job `flex-endpoint` and the `symfony/process`
+  development dependency.
+
 ## [0.1.0] - 2026-11-15
 
 ### Added

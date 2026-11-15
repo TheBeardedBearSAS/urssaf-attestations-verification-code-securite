@@ -1,6 +1,6 @@
 # ADR 0008 — Symfony Flex recipe and private endpoint
 
-- Status: accepted
+- Status: superseded by [ADR 0009](0009-flex-recipe-on-recipes-contrib.md)
 - Reference: `urssaf-tiers-prestations` commit `6f6e290` ("Symfony Flex recipe and private endpoint generator", since
   squash-merged into `1aab404` on its `main`).
 
