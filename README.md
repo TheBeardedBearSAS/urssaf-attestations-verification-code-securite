@@ -138,6 +138,7 @@ PHP 8.2+. Development only needs Docker: every `make` target runs in a container
 make install     # build the image, install dependencies
 make ci          # full quality gate: cs, rector, phpstan, mago, deptrac, composer checks, hadolint, guard, coverage, infection
 make test        # unit + functional tests
+make coverage-branches # branch coverage (Xdebug, slow), at least 96 % enforced
 make bench       # benchmarks (PHPBench): security code validation, wire encoding and decoding
 make help        # every target
 ```
@@ -149,6 +150,11 @@ Published proofs (public repository, `main`): the coverage report on Codecov, th
 Dashboard, the SonarQube Cloud quality gate and the OpenSSF Scorecard (`.github/workflows/scorecard.yml`), linked from
 the badges at the top of this file. The benchmarks (`tests/Benchmark`, PHPBench in `tools/phpbench`, out of the package
 dependencies) run on every pull request against the base commit, and the job fails on a regression of more than 20 %.
+Branch coverage (Xdebug path coverage, `make coverage-branches`, at least 96 % enforced) is slow, so the CI runs it on
+`main`, nightly and on demand, not on pull requests.
+
+Security design and review: [assurance case](docs/security/assurance-case.md) (threat model, trust boundaries, design
+principles, countered weaknesses) and [security review](docs/security/security-review-2026-11.md).
 
 `make test-contract` runs the live sandbox tests: set `URSSAF_SANDBOX_CLIENT_ID` and `URSSAF_SANDBOX_CLIENT_SECRET` (required), optionally `URSSAF_SANDBOX_BASE_URI`, `URSSAF_SANDBOX_VALID_SECURITY_CODE`, `URSSAF_SANDBOX_UNKNOWN_SECURITY_CODE` (default `xxx`); without them every contract test is skipped. In CI the manual `contract` job reads the credentials and the valid code from repository secrets, the other two from repository variables.
 
@@ -186,8 +192,9 @@ Project page and integration offer: [the-bearded-bear.com/open-source/urssaf-att
 
 ## Contributing and security
 
-Contributions are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md). Report vulnerabilities privately as described in
-[SECURITY.md](SECURITY.md), never in a public issue.
+Contributions are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
+The project's governance is described in [GOVERNANCE.md](GOVERNANCE.md) and its direction in [ROADMAP.md](ROADMAP.md).
+Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md), never in a public issue.
 
 ## License
 
