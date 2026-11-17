@@ -1,3 +1,9 @@
+# This file is part of thebeardedbear/urssaf-attestations-verification-code-securite.
+#
+# Copyright (c) TheBeardedBear and the urssaf-attestations-verification-code-securite contributors
+#
+# SPDX-License-Identifier: MIT
+
 ARG PHP_VERSION=8.2
 FROM php:${PHP_VERSION}-cli
 

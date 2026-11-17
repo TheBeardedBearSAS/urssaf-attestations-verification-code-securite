@@ -1,4 +1,10 @@
 #!/bin/sh
+# This file is part of thebeardedbear/urssaf-attestations-verification-code-securite.
+#
+# Copyright (c) TheBeardedBear and the urssaf-attestations-verification-code-securite contributors
+#
+# SPDX-License-Identifier: MIT
+
 set -e
 
 # Xdebug is only loaded when XDEBUG_MODE is set and not "off".

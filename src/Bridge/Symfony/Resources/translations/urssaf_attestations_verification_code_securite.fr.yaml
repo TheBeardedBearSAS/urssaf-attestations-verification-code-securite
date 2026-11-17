@@ -1,3 +1,9 @@
+# This file is part of thebeardedbear/urssaf-attestations-verification-code-securite.
+#
+# Copyright (c) TheBeardedBear and the urssaf-attestations-verification-code-securite contributors
+#
+# SPDX-License-Identifier: MIT
+
 # Messages français des codes de violation du package ("<sujet>.<raison>"), domaine "urssaf_attestations_verification_code_securite".
 # Mêmes clés, dans le même ordre, que urssaf_attestations_verification_code_securite.en.yaml ; surchargez les clés
 # dans le répertoire translations/ de l'application.
