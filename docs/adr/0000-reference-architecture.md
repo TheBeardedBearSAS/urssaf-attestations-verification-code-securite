@@ -46,3 +46,9 @@ Any new decision, or any departure from the reference, gets its own record `docs
   (published quotas, a verification log to persist).
 - New records for this package: 0001 stateless SDK, 0002 verification result model, 0003 batching, 0004 quotas and
   retry, 0005 `domaine` parameter, 0006 error codes, 0007 static analysis on the minimum PHP version, 0008 Symfony Flex recipe (superseded by 0009 recipe on `symfony/recipes-contrib`).
+
+## Amendment (2026-11-18, lead-accepted)
+
+- Infection `timeout` is 180 s instead of the reference 30 s, and `make infection` and the CI job fail when a mutant
+  is *skipped*: Infection never runs a mutant whose covering tests exceed the limit in total, while MSI still reads
+  100 %. The change makes the gate stricter (justified in `infection.json5`).
