@@ -52,3 +52,4 @@ Any new decision, or any departure from the reference, gets its own record `docs
 - Infection `timeout` is 180 s instead of the reference 30 s, and `make infection` and the CI job fail when a mutant
   is *skipped*: Infection never runs a mutant whose covering tests exceed the limit in total, while MSI still reads
   100 %. The change makes the gate stricter (justified in `infection.json5`).
+- A timed-out mutant counts as escaped (`timeoutsAsEscaped`), and the gate also fails on any timed-out or syntax-error mutant: every mutant really runs and is killed.
