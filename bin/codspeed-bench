@@ -1,0 +1,96 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of thebeardedbear/urssaf-attestations-verification-code-securite.
+ *
+ * Copyright (c) TheBeardedBear and the urssaf-attestations-verification-code-securite contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+// Runs the PHPBench subjects of tests/Benchmark under the CodSpeed runner (CPU simulation), through the CodSpeed
+// instrument-hooks library built by tools/codspeed/build.sh and loaded with PHP FFI.
+// Each subject runs once to load its classes, then once inside the measurement window: the PHP start-up, the
+// autoloader and the constructor of the benchmark class are not measured.
+// Outside the CodSpeed runner, every subject runs once, as a smoke test.
+// Usage: codspeed run -m simulation -- php bin/codspeed-bench [filter]
+//        (filter: a substring of "<BenchClass>::<benchMethod>")
+
+require __DIR__ . '/../vendor/autoload.php';
+
+const BENCHMARK_DIRECTORY = 'tests/Benchmark';
+const BENCHMARK_NAMESPACE = 'TheBeardedBear\\UrssafAttestationsVerificationCodeSecurite\\Tests\\Benchmark\\';
+
+$filter = $argv[1] ?? '';
+$library = getenv('CODSPEED_PHP_LIBRARY') ?: __DIR__ . '/../var/codspeed/libcodspeed_php.so';
+$underRunner = getenv('CODSPEED_ENV') !== false;
+
+$ffi = null;
+$hooks = null;
+if (is_file($library)) {
+    $ffi = FFI::cdef(<<<'C'
+        typedef struct InstrumentHooks InstrumentHooks;
+        InstrumentHooks *instrument_hooks_init(void);
+        void instrument_hooks_deinit(InstrumentHooks *);
+        bool instrument_hooks_is_instrumented(InstrumentHooks *);
+        uint8_t instrument_hooks_set_executed_benchmark(InstrumentHooks *, int32_t pid, const char *uri);
+        uint8_t instrument_hooks_set_integration(InstrumentHooks *, const char *name, const char *version);
+        uint8_t codspeed_php_start_benchmark(InstrumentHooks *);
+        uint8_t codspeed_php_stop_benchmark(InstrumentHooks *);
+        C, $library);
+    $hooks = $ffi->instrument_hooks_init();
+    if ($hooks === null || !$ffi->instrument_hooks_is_instrumented($hooks)) {
+        $hooks = null;
+    }
+}
+
+if ($underRunner && $hooks === null) {
+    fwrite(STDERR, sprintf("CodSpeed runner detected but %s is missing or not instrumented: run tools/codspeed/build.sh\n", $library));
+    exit(1);
+}
+
+$hooks === null || check($ffi->instrument_hooks_set_integration($hooks, 'codspeed-phpbench-ffi', '1.0.0'), 'set_integration');
+
+$files = glob(__DIR__ . '/../' . BENCHMARK_DIRECTORY . '/*Bench.php') ?: [];
+sort($files);
+$count = 0;
+foreach ($files as $file) {
+    $class = BENCHMARK_NAMESPACE . basename($file, '.php');
+    foreach ((new ReflectionClass($class))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+        $name = $method->getName();
+        if (!str_starts_with($name, 'bench') || ($filter !== '' && !str_contains(basename($file, '.php') . '::' . $name, $filter))) {
+            continue;
+        }
+
+        $benchmark = new $class();
+        $subject = $benchmark->{$name}(...);
+        $subject();
+        if ($hooks !== null) {
+            check($ffi->codspeed_php_start_benchmark($hooks), 'start_benchmark');
+            $subject();
+            check($ffi->codspeed_php_stop_benchmark($hooks), 'stop_benchmark');
+            $uri = BENCHMARK_DIRECTORY . '/' . basename($file) . '::' . $name;
+            check($ffi->instrument_hooks_set_executed_benchmark($hooks, getmypid(), $uri), 'set_executed_benchmark');
+        }
+        echo sprintf("%s %s::%s\n", $hooks === null ? 'Ran' : 'Measured', basename($file, '.php'), $name);
+        ++$count;
+    }
+}
+
+$hooks === null || $ffi->instrument_hooks_deinit($hooks);
+
+if ($count === 0) {
+    fwrite(STDERR, sprintf("No benchmark matches \"%s\"\n", $filter));
+    exit(1);
+}
+
+function check(int $status, string $call): void
+{
+    if ($status !== 0) {
+        fwrite(STDERR, sprintf("CodSpeed instrument-hooks %s failed (%d)\n", $call, $status));
+        exit(1);
+    }
+}
