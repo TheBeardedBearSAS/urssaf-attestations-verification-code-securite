@@ -22,9 +22,10 @@ if [ ! -d "$src" ]; then
     curl -fsSL "https://github.com/CodSpeedHQ/instrument-hooks/archive/$INSTRUMENT_HOOKS_COMMIT.tar.gz" | tar -xz -C "$out"
 fi
 
-# The warnings are those of the generated dist/core.c, documented as harmless by instrument-hooks.
-${CC:-cc} -O2 -g -shared -fPIC -fno-omit-frame-pointer \
-    -Wno-maybe-uninitialized -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-type-limits \
+# C11 as in the instrument-hooks example build (newer compilers default to C23, which dist/core.c does not build
+# with); the warnings disabled are those of the generated dist/core.c.
+${CC:-cc} -std=gnu11 -O2 -g -shared -fPIC \
+    -Wno-maybe-uninitialized -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-type-limits -Wno-format-security \
     -I "$src/includes" \
     "$src/dist/core.c" "$root/tools/codspeed/codspeed_php.c" \
     -o "$out/libcodspeed_php.so"
