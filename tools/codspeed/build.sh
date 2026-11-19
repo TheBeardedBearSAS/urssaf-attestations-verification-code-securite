@@ -19,7 +19,7 @@ src="$out/instrument-hooks-$INSTRUMENT_HOOKS_COMMIT"
 
 mkdir -p "$out"
 if [ ! -d "$src" ]; then
-    curl -fsSL "https://github.com/CodSpeedHQ/instrument-hooks/archive/$INSTRUMENT_HOOKS_COMMIT.tar.gz" | tar -xz -C "$out"
+    curl --proto =https --tlsv1.2 -fsSL "https://github.com/CodSpeedHQ/instrument-hooks/archive/$INSTRUMENT_HOOKS_COMMIT.tar.gz" | tar -xz -C "$out"
 fi
 
 # C11 as in the instrument-hooks example build (newer compilers default to C23, which dist/core.c does not build
