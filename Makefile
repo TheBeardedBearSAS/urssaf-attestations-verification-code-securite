@@ -22,7 +22,7 @@ UNIT_FUNCTIONAL := --testsuite=$(SUITES)
 
 .DEFAULT_GOAL := help
 .PHONY: help build install update shell test test-unit test-functional test-contract coverage coverage-paths coverage-branches \
-	bench infection phpstan mago cs cs-fix rector rector-fix deptrac composer-checks hadolint guard ci
+	bench bench-codspeed infection phpstan mago cs cs-fix rector rector-fix deptrac composer-checks hadolint guard ci
 
 help: ## List targets
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "%-16s %s\n", $$1, $$2}'
@@ -66,6 +66,12 @@ coverage-branches: ## Branch coverage (Xdebug, slow): Cobertura in var/coverage,
 bench: ## Benchmarks (PHPBench in tools/phpbench, out of the package dependencies); e.g. make bench ARGS="--tag=main"
 	$(PHP) composer install --no-progress --working-dir=tools/phpbench
 	$(PHP) tools/phpbench/vendor/bin/phpbench run --report=urssaf $(ARGS)
+
+# Runs on the host, not in Docker: the CodSpeed CLI runs PHP under its own Valgrind. Needs PHP with FFI, a C compiler
+# and the CodSpeed CLI (https://codspeed.io/docs/cli), logged in to upload; e.g. make bench-codspeed ARGS=Verification
+bench-codspeed: ## CodSpeed benchmarks (CPU simulation) of the PHPBench subjects, on the host
+	sh tools/codspeed/build.sh
+	codspeed run -m simulation -- php bin/codspeed-bench $(ARGS)
 
 infection: ## Mutation testing (100% MSI); runs its own initial test pass (never --skip-initial-tests: false positives)
 	$(PHP) vendor/bin/infection --min-msi=100 --min-covered-msi=100 --threads=max --show-mutations --no-progress \
