@@ -1,0 +1,49 @@
+# This file is part of thebeardedbear/urssaf-attestations-verification-code-securite.
+#
+# Copyright (c) TheBeardedBear and the urssaf-attestations-verification-code-securite contributors
+#
+# SPDX-License-Identifier: MIT
+
+# CodSpeed: the PHPBench subjects of tests/Benchmark measured with CPU simulation (bin/codspeed-bench), same as
+# `make bench-codspeed`. Results and pull request reports: https://app.codspeed.io/TheBeardedBearSAS/urssaf-attestations-verification-code-securite
+name: CodSpeed
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # Lets CodSpeed run the benchmarks on past commits to build the history.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codspeed-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  COMPOSER_NO_INTERACTION: '1'
+  XDEBUG_MODE: 'off'
+
+jobs:
+  benchmarks:
+    name: codspeed
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # CodSpeed upload through OIDC (no token)
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          php-version: '8.4'
+          dependencies: locked
+      - name: Build the CodSpeed instrument-hooks library (PHP FFI)
+        run: sh tools/codspeed/build.sh
+      - uses: CodSpeedHQ/action@af75f77f17a054769abefaa42fe8dc2975469b5f # v5.6.3
+        with:
+          mode: simulation
+          run: php bin/codspeed-bench

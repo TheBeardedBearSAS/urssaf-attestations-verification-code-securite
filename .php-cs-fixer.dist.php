@@ -25,6 +25,7 @@ $finder = Finder::create()
     ->append([
         __DIR__ . '/bin/check-coverage',
         __DIR__ . '/bin/check-branch-coverage',
+        __DIR__ . '/bin/codspeed-bench',
         __DIR__ . '/.php-cs-fixer.dist.php',
         __DIR__ . '/composer-unused.php',
         __DIR__ . '/rector.php',
